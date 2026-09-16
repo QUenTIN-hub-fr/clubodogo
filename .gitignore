@@ -1,0 +1,8 @@
+# Fichier de configuration contenant les identifiants de la base
+code/config.php
+
+# Fichiers systeme macOS
+.DS_Store
+
+# Dossier de travail personnel, non lie au code
+dossier/
