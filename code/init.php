@@ -20,5 +20,22 @@ function aLeRole($role)
 
 function proteger($e)
 {
-    return htmlspecialchars($e, ENT_QUOTES, 'UTF-8');
+    return htmlspecialchars($e ?? '', ENT_QUOTES, 'UTF-8');
+}
+
+function exigerConnexion()
+{
+    if (!estConnecte()) {
+        header('Location: /compte/connexion.php');
+        exit;
+    }
+}
+
+function exigerRole($role)
+{
+    exigerConnexion();
+    if (!aLeRole($role)) {
+        http_response_code(403);
+        exit('Acces refuse.');
+    }
 }
