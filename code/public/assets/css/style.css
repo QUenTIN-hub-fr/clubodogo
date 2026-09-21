@@ -333,3 +333,127 @@ img {
     outline: 2px solid var(--vert-secondaire);
     outline-offset: 1px;
 }
+
+.badge {
+    display: inline-block;
+    padding: 0.2rem 0.7rem;
+    border-radius: 999px;
+    background-color: var(--succes-fond);
+    color: var(--vert-secondaire);
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.detail {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+    margin-top: 1rem;
+    align-items: start;
+}
+
+.infos p {
+    margin-bottom: 0.4rem;
+}
+
+.encart-inscription {
+    background-color: var(--blanc);
+    border: 1px solid var(--bordure);
+    border-radius: 12px;
+    padding: 1.5rem;
+}
+
+.encart-inscription h2 {
+    margin-bottom: 1rem;
+}
+
+.encart-inscription select {
+    width: 100%;
+    padding: 0.7rem 0.85rem;
+    border: 1px solid var(--bordure);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+@media (max-width: 800px) {
+    .detail {
+        grid-template-columns: 1fr;
+    }
+}
+
+.tableau {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--blanc);
+    border: 1px solid var(--bordure);
+    margin-top: 1.5rem;
+}
+
+.tableau th,
+.tableau td {
+    padding: 0.85rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--bordure);
+    font-size: 0.9rem;
+}
+
+.tableau th {
+    background-color: var(--fond);
+    color: var(--vert-primaire);
+}
+
+.statut {
+    display: inline-block;
+    padding: 0.2rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.statut-confirme {
+    background-color: var(--succes-fond);
+    color: var(--succes);
+}
+
+.statut-en_attente {
+    background-color: #fdf1e3;
+    color: #8a4b12;
+}
+
+.statut-annule {
+    background-color: var(--fond);
+    color: var(--vert-gris);
+}
+
+@media (max-width: 700px) {
+    .tableau thead {
+        display: none;
+    }
+
+    .tableau,
+    .tableau tbody,
+    .tableau tr,
+    .tableau td {
+        display: block;
+        width: 100%;
+    }
+
+    .tableau tr {
+        border-bottom: 1px solid var(--bordure);
+        padding: 0.5rem 0;
+    }
+
+    .tableau td {
+        border: none;
+        padding: 0.35rem 1rem;
+    }
+
+    .tableau td::before {
+        content: attr(data-label) " : ";
+        font-weight: 600;
+        color: var(--vert-primaire);
+    }
+}

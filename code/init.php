@@ -39,3 +39,19 @@ function exigerRole($role)
         exit('Acces refuse.');
     }
 }
+
+function ageEnMois($dateNaissance, $dateReference)
+{
+    $naissance = new DateTime($dateNaissance);
+    $reference = new DateTime($dateReference);
+    $ecart = $naissance->diff($reference);
+    return $ecart->y * 12 + $ecart->m;
+}
+
+function trancheAge($min, $max)
+{
+    if ($max === null) {
+        return 'a partir de ' . $min . ' mois';
+    }
+    return 'de ' . $min . ' a ' . $max . ' mois';
+}

@@ -7,3 +7,13 @@ if (burger && navigation) {
         burger.classList.toggle('actif');
     });
 }
+
+const formulairesAConfirmer = document.querySelectorAll('form[data-confirmation]');
+
+formulairesAConfirmer.forEach(function (formulaire) {
+    formulaire.addEventListener('submit', function (evenement) {
+        if (!confirm(formulaire.dataset.confirmation)) {
+            evenement.preventDefault();
+        }
+    });
+});
