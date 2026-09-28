@@ -14,37 +14,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($action === 'supprimer') {
         $idType = (int) ($_POST['id_type'] ?? 0);
 
-        // Un type encore utilise par des cours ne peut pas etre supprime
+        // Un type de cours rattaché à des séances existantes ne peut pas être supprimé
         $verif = $pdo->prepare('SELECT COUNT(*) AS total FROM cours WHERE id_type_cours = ?');
         $verif->execute([$idType]);
 
         if ((int) $verif->fetch()['total'] > 0) {
-            $erreurs[] = "Ce type ne peut pas etre supprime : des cours y sont rattaches.";
+            $erreurs[] = "Ce type de cours ne peut pas être supprimé : des cours y sont rattachés.";
         } else {
             $pdo->prepare('DELETE FROM type_cours WHERE id = ?')->execute([$idType]);
-            $succes = 'Le type de cours a bien ete supprime.';
+            $succes = 'Le type de cours a bien été supprimé.';
         }
     } else {
         $libelle = trim($_POST['libelle_type'] ?? '');
         $idType = (int) ($_POST['id_type'] ?? 0);
 
         if ($libelle === '') {
-            $erreurs[] = 'Le libelle est obligatoire.';
+            $erreurs[] = 'Le libellé est obligatoire.';
         } elseif (mb_strlen($libelle) > 100) {
-            $erreurs[] = 'Le libelle ne peut pas depasser 100 caracteres.';
+            $erreurs[] = 'Le libellé ne peut pas dépasser 100 caractères.';
         } else {
-            // Le meme libelle ne doit pas exister deux fois, sauf pour la ligne en cours de modification
+            // Le même libellé ne doit pas exister deux fois, sauf pour la ligne en cours de modification
             $verif = $pdo->prepare('SELECT id FROM type_cours WHERE libelle_type = ? AND id != ?');
             $verif->execute([$libelle, $idType]);
 
             if ($verif->fetch()) {
-                $erreurs[] = 'Ce type de cours existe deja.';
+                $erreurs[] = 'Ce type de cours existe déjà.';
             } elseif ($idType > 0) {
                 $pdo->prepare('UPDATE type_cours SET libelle_type = ? WHERE id = ?')->execute([$libelle, $idType]);
-                $succes = 'Le type de cours a bien ete modifie.';
+                $succes = 'Le type de cours a bien été modifié.';
             } else {
                 $pdo->prepare('INSERT INTO type_cours (libelle_type) VALUES (?)')->execute([$libelle]);
-                $succes = 'Le type de cours a bien ete ajoute.';
+                $succes = 'Le type de cours a bien été ajouté.';
             }
         }
 
@@ -111,13 +111,13 @@ require_once __DIR__ . '/../../header-admin.php';
 </form>
 
 <?php if (empty($types)): ?>
-    <p class="vide">Aucun type de cours enregistre.</p>
+    <p class="vide">Aucun type de cours enregistré.</p>
 <?php else: ?>
     <table class="tableau">
         <thead>
             <tr>
                 <th>Type de cours</th>
-                <th>Cours rattaches</th>
+                <th>Cours rattachés</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -125,7 +125,7 @@ require_once __DIR__ . '/../../header-admin.php';
             <?php foreach ($types as $type): ?>
                 <tr>
                     <td data-label="Type de cours"><?= proteger($type['libelle_type']) ?></td>
-                    <td data-label="Cours rattaches"><?= (int) $type['nb_cours'] ?></td>
+                    <td data-label="Cours rattachés"><?= (int) $type['nb_cours'] ?></td>
                     <td data-label="Actions">
                         <div class="actions">
                             <a href="/admin/types-cours.php?id=<?= (int) $type['id'] ?>" class="bouton bouton-petit">Modifier</a>

@@ -14,37 +14,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($action === 'supprimer') {
         $idRace = (int) ($_POST['id_race'] ?? 0);
 
-        // Une race encore attribuee a des chiens ne peut pas etre supprimee
+        // Une race encore attribuée à des chiens ne peut pas être supprimée
         $verif = $pdo->prepare('SELECT COUNT(*) AS total FROM chien WHERE id_race = ?');
         $verif->execute([$idRace]);
 
         if ((int) $verif->fetch()['total'] > 0) {
-            $erreurs[] = "Cette race ne peut pas etre supprimee : des chiens y sont rattaches.";
+            $erreurs[] = "Cette race ne peut pas être supprimée : des chiens y sont rattachés.";
         } else {
             $pdo->prepare('DELETE FROM race WHERE id = ?')->execute([$idRace]);
-            $succes = 'La race a bien ete supprimee.';
+            $succes = 'La race a bien été supprimée.';
         }
     } else {
         $libelle = trim($_POST['libelle_race'] ?? '');
         $idRace = (int) ($_POST['id_race'] ?? 0);
 
         if ($libelle === '') {
-            $erreurs[] = 'Le libelle est obligatoire.';
+            $erreurs[] = 'Le libellé est obligatoire.';
         } elseif (mb_strlen($libelle) > 100) {
-            $erreurs[] = 'Le libelle ne peut pas depasser 100 caracteres.';
+            $erreurs[] = 'Le libellé ne peut pas dépasser 100 caractères.';
         } else {
-            // La meme race ne doit pas exister deux fois, sauf pour la ligne en cours de modification
+            // La même race ne doit pas exister deux fois, sauf pour la ligne en cours de modification
             $verif = $pdo->prepare('SELECT id FROM race WHERE libelle_race = ? AND id != ?');
             $verif->execute([$libelle, $idRace]);
 
             if ($verif->fetch()) {
-                $erreurs[] = 'Cette race existe deja.';
+                $erreurs[] = 'Cette race existe déjà.';
             } elseif ($idRace > 0) {
                 $pdo->prepare('UPDATE race SET libelle_race = ? WHERE id = ?')->execute([$libelle, $idRace]);
-                $succes = 'La race a bien ete modifiee.';
+                $succes = 'La race a bien été modifiée.';
             } else {
                 $pdo->prepare('INSERT INTO race (libelle_race) VALUES (?)')->execute([$libelle]);
-                $succes = 'La race a bien ete ajoutee.';
+                $succes = 'La race a bien été ajoutée.';
             }
         }
 
@@ -111,7 +111,7 @@ require_once __DIR__ . '/../../header-admin.php';
 </form>
 
 <?php if (empty($races)): ?>
-    <p class="vide">Aucune race enregistree.</p>
+    <p class="vide">Aucune race enregistrée.</p>
 <?php else: ?>
     <table class="tableau">
         <thead>
