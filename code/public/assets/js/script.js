@@ -17,3 +17,19 @@ formulairesAConfirmer.forEach(function (formulaire) {
         }
     });
 });
+
+const boutonsMotDePasse = document.querySelectorAll('.afficher-mdp');
+
+boutonsMotDePasse.forEach(function (bouton) {
+    bouton.addEventListener('click', function () {
+        const champ = document.getElementById(bouton.dataset.cible);
+
+        if (champ.type === 'password') {
+            champ.type = 'text';
+            bouton.textContent = 'Masquer';
+        } else {
+            champ.type = 'password';
+            bouton.textContent = 'Afficher';
+        }
+    });
+});

@@ -53,56 +53,65 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
-?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inscription - Clubodogo</title>
-</head>
-<body>
-    <h1>Creer un compte</h1>
 
-    <?php if ($succes): ?>
-        <p>Votre compte a bien ete cree. Vous pouvez maintenant vous connecter.</p>
-        <p><a href="connexion.php">Se connecter</a></p>
-    <?php else: ?>
+$titrePage = 'Creer un compte';
+require_once __DIR__ . '/../../header.php';
+?>
+
+<h1>Creer un compte</h1>
+
+<?php if ($succes): ?>
+    <div class="formulaire">
+        <div class="message message-succes">Votre compte a bien ete cree. Vous pouvez maintenant vous connecter.</div>
+        <a href="connexion.php" class="bouton">Se connecter</a>
+    </div>
+<?php else: ?>
+
+    <form method="post" action="inscription.php" class="formulaire">
 
         <?php if (!empty($erreurs)): ?>
-            <ul>
-                <?php foreach ($erreurs as $erreur): ?>
-                    <li><?= proteger($erreur) ?></li>
-                <?php endforeach; ?>
-            </ul>
+            <div class="message message-erreur">
+                <ul>
+                    <?php foreach ($erreurs as $erreur): ?>
+                        <li><?= proteger($erreur) ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
         <?php endif; ?>
 
-        <form method="post" action="inscription.php">
-            <p>
-                <label for="nom">Nom</label><br>
-                <input type="text" id="nom" name="nom" value="<?= proteger($nom ?? '') ?>" required>
-            </p>
-            <p>
-                <label for="prenom">Prenom</label><br>
-                <input type="text" id="prenom" name="prenom" value="<?= proteger($prenom ?? '') ?>" required>
-            </p>
-            <p>
-                <label for="email">Adresse email</label><br>
-                <input type="email" id="email" name="email" value="<?= proteger($email ?? '') ?>" required>
-            </p>
-            <p>
-                <label for="mot_de_passe">Mot de passe</label><br>
+        <p>
+            <label for="nom">Nom</label>
+            <input type="text" id="nom" name="nom" value="<?= proteger($nom ?? '') ?>" required>
+        </p>
+        <p>
+            <label for="prenom">Prenom</label>
+            <input type="text" id="prenom" name="prenom" value="<?= proteger($prenom ?? '') ?>" required>
+        </p>
+        <p>
+            <label for="email">Adresse email</label>
+            <input type="email" id="email" name="email" value="<?= proteger($email ?? '') ?>" required>
+        </p>
+        <p>
+            <label for="mot_de_passe">Mot de passe</label>
+            <span class="champ-mdp">
                 <input type="password" id="mot_de_passe" name="mot_de_passe" required>
-            </p>
-            <p>
-                <label for="confirmation">Confirmer le mot de passe</label><br>
+                <button type="button" class="afficher-mdp" data-cible="mot_de_passe">Afficher</button>
+            </span>
+            <small class="aide">8 caracteres minimum, dont une majuscule et un chiffre.</small>
+        </p>
+        <p>
+            <label for="confirmation">Confirmer le mot de passe</label>
+            <span class="champ-mdp">
                 <input type="password" id="confirmation" name="confirmation" required>
-            </p>
-            <p><button type="submit">Creer mon compte</button></p>
-        </form>
+                <button type="button" class="afficher-mdp" data-cible="confirmation">Afficher</button>
+            </span>
+        </p>
+        <div class="actions">
+            <button type="submit" class="bouton">Creer mon compte</button>
+            <a href="connexion.php">J'ai deja un compte</a>
+        </div>
+    </form>
 
-        <p><a href="connexion.php">J'ai deja un compte</a></p>
+<?php endif; ?>
 
-    <?php endif; ?>
-</body>
-</html>
+<?php require_once __DIR__ . '/../../footer.php'; ?>

@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['utilisateur_id'] = $utilisateur['id'];
             $_SESSION['utilisateur'] = $utilisateur;
 
-            header('Location: ../index.php');
+            header('Location: /index.php');
             exit;
 
         } else {
@@ -31,33 +31,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
+
+$titrePage = 'Connexion';
+require_once __DIR__ . '/../../header.php';
 ?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion - Clubodogo</title>
-</head>
-<body>
-    <h1>Se connecter</h1>
+
+<h1>Se connecter</h1>
+
+<form method="post" action="connexion.php" class="formulaire">
 
     <?php if ($erreur !== ''): ?>
-        <p><?= proteger($erreur) ?></p>
+        <div class="message message-erreur"><?= proteger($erreur) ?></div>
     <?php endif; ?>
 
-    <form method="post" action="connexion.php">
-        <p>
-            <label for="email">Adresse email</label><br>
-            <input type="email" id="email" name="email" value="<?= proteger($email ?? '') ?>" required>
-        </p>
-        <p>
-            <label for="mot_de_passe">Mot de passe</label><br>
+    <p>
+        <label for="email">Adresse email</label>
+        <input type="email" id="email" name="email" value="<?= proteger($email ?? '') ?>" required>
+    </p>
+    <p>
+        <label for="mot_de_passe">Mot de passe</label>
+        <span class="champ-mdp">
             <input type="password" id="mot_de_passe" name="mot_de_passe" required>
-        </p>
-        <p><button type="submit">Se connecter</button></p>
-    </form>
+            <button type="button" class="afficher-mdp" data-cible="mot_de_passe">Afficher</button>
+        </span>
+    </p>
+    <div class="actions">
+        <button type="submit" class="bouton">Se connecter</button>
+        <a href="inscription.php">Creer un compte</a>
+    </div>
+</form>
 
-    <p><a href="inscription.php">Creer un compte</a></p>
-</body>
-</html>
+<?php require_once __DIR__ . '/../../footer.php'; ?>
