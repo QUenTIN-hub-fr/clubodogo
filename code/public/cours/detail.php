@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $idChien = (int) ($_POST['id_chien'] ?? 0);
     $existante = false;
 
-    // Regle 1 : le chien doit appartenir au proprietaire connecte
+    // Règle 1 : le chien doit appartenir au propriétaire connecté
     $req = $pdo->prepare('SELECT id, nom_chien, date_naissance FROM chien WHERE id = ? AND id_utilisateur = ?');
     $req->execute([$idChien, $utilisateur['id']]);
     $chien = $req->fetch();
@@ -48,33 +48,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!$chien) {
         $erreurs[] = 'Veuillez choisir un de vos chiens.';
     } else {
-        // Regle 2 : le cours ne doit pas etre passe
+        // Règle 2 : le cours ne doit pas être passé
         if ($cours['date_cours'] < date('Y-m-d')) {
-            $erreurs[] = 'Ce cours est deja passe.';
+            $erreurs[] = 'Ce cours est déjà passé.';
         }
 
-        // Regle 3 : il doit rester au moins une place
+        // Règle 3 : il doit rester au moins une place
         if ($placesRestantes <= 0) {
             $erreurs[] = 'Ce cours est complet.';
         }
 
-        // Regle 4 : l'age du chien le jour du cours doit etre dans la tranche
+        // Règle 4 : l'âge du chien le jour du cours doit être dans la tranche
         $age = ageEnMois($chien['date_naissance'], $cours['date_cours']);
         $tropJeune = $age < $cours['age_min_mois'];
         $tropAge = $cours['age_max_mois'] !== null && $age > $cours['age_max_mois'];
 
         if ($tropJeune || $tropAge) {
             $erreurs[] = $chien['nom_chien'] . ' aura ' . $age . ' mois le jour du cours. '
-                . 'Ce cours est reserve aux chiens ' . trancheAge($cours['age_min_mois'], $cours['age_max_mois']) . '.';
+                . 'Ce cours est réservé aux chiens ' . trancheAge($cours['age_min_mois'], $cours['age_max_mois']) . '.';
         }
 
-        // Regle 5 : le chien ne doit pas deja etre inscrit
+        // Règle 5 : le chien ne doit pas déjà être inscrit
         $req = $pdo->prepare('SELECT id, statut FROM inscription WHERE id_cours = ? AND id_chien = ?');
         $req->execute([$cours['id'], $chien['id']]);
         $existante = $req->fetch();
 
         if ($existante && $existante['statut'] !== 'annule') {
-            $erreurs[] = $chien['nom_chien'] . ' est deja inscrit a ce cours.';
+            $erreurs[] = $chien['nom_chien'] . ' est déjà inscrit à ce cours.';
         }
     }
 
@@ -89,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             );
             $ajout->execute([$cours['id'], $chien['id']]);
         }
-        $succes = $chien['nom_chien'] . ' est bien inscrit a ce cours.';
+        $succes = $chien['nom_chien'] . ' est bien inscrit à ce cours.';
         $placesRestantes--;
     }
 }
@@ -106,9 +106,9 @@ require_once __DIR__ . '/../../header.php';
         <h1><?= proteger($cours['titre']) ?></h1>
         <p><?= proteger($cours['description']) ?></p>
         <p><strong>Date :</strong> <?= date('d/m/Y', strtotime($cours['date_cours'])) ?></p>
-        <p><strong>Horaire :</strong> <?= substr($cours['heure_debut'], 0, 5) ?> a <?= substr($cours['heure_fin'], 0, 5) ?></p>
+        <p><strong>Horaire :</strong> <?= substr($cours['heure_debut'], 0, 5) ?> à <?= substr($cours['heure_fin'], 0, 5) ?></p>
         <p><strong>Coach :</strong> <?= proteger($cours['coach_prenom'] . ' ' . $cours['coach_nom']) ?></p>
-        <p><strong>Age requis :</strong> <?= trancheAge($cours['age_min_mois'], $cours['age_max_mois']) ?></p>
+        <p><strong>Âge requis :</strong> <?= trancheAge($cours['age_min_mois'], $cours['age_max_mois']) ?></p>
         <p><strong>Places :</strong> <?= max(0, $placesRestantes) ?> restante(s) sur <?= (int) $cours['capacite_max'] ?></p>
     </div>
 
@@ -130,10 +130,10 @@ require_once __DIR__ . '/../../header.php';
         <?php endif; ?>
 
         <?php if (!estConnecte()): ?>
-            <p>Connectez-vous pour inscrire votre chien a ce cours.</p>
+            <p>Connectez-vous pour inscrire votre chien à ce cours.</p>
             <p><a href="/compte/connexion.php" class="bouton">Se connecter</a></p>
         <?php elseif (!aLeRole('proprietaire')): ?>
-            <p>Seuls les proprietaires peuvent inscrire un chien.</p>
+            <p>Seuls les propriétaires peuvent inscrire un chien.</p>
         <?php elseif (empty($chiens)): ?>
             <p>Vous devez d'abord enregistrer un chien.</p>
             <p><a href="/chiens/formulaire.php" class="bouton">Ajouter un chien</a></p>

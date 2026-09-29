@@ -57,7 +57,7 @@ img {
     padding: 2rem 1.25rem 3rem;
 }
 
-/* En-tete */
+/* En-tête */
 
 .entete {
     background-color: var(--vert-primaire);
@@ -344,7 +344,7 @@ img {
     margin-top: 0.3rem;
 }
 
-/* Detail d'un cours */
+/* Détail d'un cours */
 
 .detail {
     display: grid;
@@ -576,6 +576,7 @@ img {
 }
 
 /* Tableau de bord du back-office */
+
 .chiffres {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -584,7 +585,8 @@ img {
 }
 
 .chiffre {
-    background-color: #ffffff;
+    background-color: var(--blanc);
+    border: 1px solid var(--bordure);
     border-radius: 12px;
     padding: 1.5rem;
     text-align: center;
@@ -592,10 +594,10 @@ img {
 
 .chiffre-valeur {
     display: block;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Poppins', Arial, sans-serif;
     font-size: 2.5rem;
     font-weight: 700;
-    color: #1B3A2B;
+    color: var(--vert-primaire);
     line-height: 1.1;
 }
 
@@ -603,5 +605,38 @@ img {
     display: block;
     margin-top: 0.5rem;
     font-size: 0.95rem;
-    color: #4a5a52;
+    color: var(--vert-gris);
+}
+
+/* Pages de contenu : mentions légales, contact */
+
+.texte-legal {
+    max-width: 1200px;
+    margin-top: 1.5rem;
+    background-color: var(--blanc);
+    border: 1px solid var(--bordure);
+    border-radius: 12px;
+    padding: 2.5rem;
+}
+
+.texte-legal h2 {
+    margin-top: 2.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.texte-legal h2:first-of-type {
+    margin-top: 0;
+}
+
+.texte-legal p {
+    margin-bottom: 1rem;
+    line-height: 1.7;
+}
+
+.avertissement {
+    background-color: #fdf1e3;
+    border-left: 4px solid var(--orange);
+    border-radius: 6px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 2.5rem;
 }

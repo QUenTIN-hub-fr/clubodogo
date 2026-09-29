@@ -20,7 +20,7 @@ require_once __DIR__ . '/../../header.php';
 <h1>Nos cours</h1>
 
 <?php if (empty($cours)): ?>
-    <p class="vide">Aucun cours n'est programme pour le moment.</p>
+    <p class="vide">Aucun cours n'est programmé pour le moment.</p>
 <?php else: ?>
     <div class="grille">
         <?php foreach ($cours as $c): ?>
@@ -28,7 +28,7 @@ require_once __DIR__ . '/../../header.php';
             <div class="carte">
                 <span class="badge"><?= proteger($c['libelle_type']) ?></span>
                 <h3><?= proteger($c['titre']) ?></h3>
-                <p><?= date('d/m/Y', strtotime($c['date_cours'])) ?>, de <?= substr($c['heure_debut'], 0, 5) ?> a <?= substr($c['heure_fin'], 0, 5) ?></p>
+                <p><?= date('d/m/Y', strtotime($c['date_cours'])) ?>, de <?= substr($c['heure_debut'], 0, 5) ?> à <?= substr($c['heure_fin'], 0, 5) ?></p>
                 <p>
                     <?php if ($placesRestantes > 0): ?>
                         <?= $placesRestantes ?> place(s) restante(s) sur <?= (int) $c['capacite_max'] ?>

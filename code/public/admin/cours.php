@@ -12,11 +12,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $verif->execute([$idCours]);
 
     if ((int) $verif->fetch()['total'] > 0) {
-        $erreur = "Ce cours ne peut pas etre supprime : des chiens y sont inscrits.";
+        $erreur = "Ce cours ne peut pas être supprimé : des chiens y sont inscrits.";
     } else {
         $pdo->prepare('DELETE FROM inscription WHERE id_cours = ?')->execute([$idCours]);
         $pdo->prepare('DELETE FROM cours WHERE id = ?')->execute([$idCours]);
-        $succes = 'Le cours a bien ete supprime.';
+        $succes = 'Le cours a bien été supprimé.';
     }
 }
 
@@ -38,7 +38,7 @@ require_once __DIR__ . '/../../header-admin.php';
 
 <div class="barre-titre">
     <h1>Gestion des cours</h1>
-    <a href="/admin/cours-formulaire.php" class="bouton bouton-orange">Creer un cours</a>
+    <a href="/admin/cours-formulaire.php" class="bouton bouton-orange">Créer un cours</a>
 </div>
 
 <?php if ($succes !== ''): ?>
@@ -50,7 +50,7 @@ require_once __DIR__ . '/../../header-admin.php';
 <?php endif; ?>
 
 <?php if (empty($cours)): ?>
-    <p class="vide">Aucun cours enregistre.</p>
+    <p class="vide">Aucun cours enregistré.</p>
 <?php else: ?>
     <table class="tableau">
         <thead>
@@ -68,7 +68,7 @@ require_once __DIR__ . '/../../header-admin.php';
                 <tr>
                     <td data-label="Cours"><?= proteger($c['titre']) ?></td>
                     <td data-label="Type"><?= proteger($c['libelle_type']) ?></td>
-                    <td data-label="Date"><?= date('d/m/Y', strtotime($c['date_cours'])) ?> a <?= substr($c['heure_debut'], 0, 5) ?></td>
+                    <td data-label="Date"><?= date('d/m/Y', strtotime($c['date_cours'])) ?> à <?= substr($c['heure_debut'], 0, 5) ?></td>
                     <td data-label="Coach"><?= proteger($c['coach_prenom'] . ' ' . $c['coach_nom']) ?></td>
                     <td data-label="Inscrits"><?= (int) $c['nb_inscrits'] ?> / <?= (int) $c['capacite_max'] ?></td>
                     <td data-label="Actions">

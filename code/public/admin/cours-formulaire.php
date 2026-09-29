@@ -32,7 +32,7 @@ if ($modification && $_SERVER['REQUEST_METHOD'] !== 'POST') {
     $requete->execute([$id]);
     $trouve = $requete->fetch();
 
-    // Un identifiant inexistant renvoie vers la liste plutot que d'afficher un formulaire vide
+    // Un identifiant inexistant renvoie vers la liste plutôt que d'afficher un formulaire vide
     if (!$trouve) {
         header('Location: /admin/cours.php');
         exit;
@@ -64,41 +64,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($cours['date_cours'] === '') {
         $erreurs[] = 'La date est obligatoire.';
     } elseif (!$modification && $cours['date_cours'] < date('Y-m-d')) {
-        $erreurs[] = 'Un nouveau cours ne peut pas etre place dans le passe.';
+        $erreurs[] = 'Un nouveau cours ne peut pas être placé dans le passé.';
     }
     if ($cours['heure_debut'] === '' || $cours['heure_fin'] === '') {
         $erreurs[] = 'Les horaires sont obligatoires.';
     } elseif ($cours['heure_fin'] <= $cours['heure_debut']) {
-        $erreurs[] = "L'heure de fin doit etre posterieure a l'heure de debut.";
+        $erreurs[] = "L'heure de fin doit être postérieure à l'heure de début.";
     }
     if ($cours['capacite_max'] < 1 || $cours['capacite_max'] > 50) {
-        $erreurs[] = 'Le nombre de places doit etre compris entre 1 et 50.';
+        $erreurs[] = 'Le nombre de places doit être compris entre 1 et 50.';
     }
     if ($cours['age_max_mois'] !== '' && (int) $cours['age_max_mois'] <= $cours['age_min_mois']) {
-        $erreurs[] = "L'age maximum doit etre superieur a l'age minimum.";
+        $erreurs[] = "L'âge maximum doit être supérieur à l'âge minimum.";
     }
 
-    // Le coach et le type sont verifies en base : le menu deroulant ne protege rien
+    // Le coach et le type sont vérifiés en base : le menu déroulant ne protège rien
     $verifCoach = $pdo->prepare("SELECT id FROM utilisateur WHERE id = ? AND role = 'coach'");
     $verifCoach->execute([$cours['id_utilisateur']]);
     if (!$verifCoach->fetch()) {
-        $erreurs[] = 'Le coach selectionne est introuvable.';
+        $erreurs[] = 'Le coach sélectionné est introuvable.';
     }
 
     $verifType = $pdo->prepare('SELECT id FROM type_cours WHERE id = ?');
     $verifType->execute([$cours['id_type_cours']]);
     if (!$verifType->fetch()) {
-        $erreurs[] = 'Le type de cours selectionne est introuvable.';
+        $erreurs[] = 'Le type de cours sélectionné est introuvable.';
     }
 
-    // On ne peut pas reduire la capacite en dessous du nombre de chiens deja inscrits
+    // On ne peut pas réduire la capacité en dessous du nombre de chiens déjà inscrits
     if ($modification && empty($erreurs)) {
         $verifPlaces = $pdo->prepare("SELECT COUNT(*) AS total FROM inscription WHERE id_cours = ? AND statut != 'annule'");
         $verifPlaces->execute([$id]);
         $dejaInscrits = (int) $verifPlaces->fetch()['total'];
 
         if ($cours['capacite_max'] < $dejaInscrits) {
-            $erreurs[] = "Le nombre de places ne peut pas etre inferieur aux " . $dejaInscrits . " inscription(s) existante(s).";
+            $erreurs[] = "Le nombre de places ne peut pas être inférieur aux " . $dejaInscrits . " inscription(s) existante(s).";
         }
     }
 
@@ -137,11 +137,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-$titrePage = $modification ? 'Modifier un cours' : 'Creer un cours';
+$titrePage = $modification ? 'Modifier un cours' : 'Créer un cours';
 require_once __DIR__ . '/../../header-admin.php';
 ?>
 
-<h1><?= $modification ? 'Modifier un cours' : 'Creer un cours' ?></h1>
+<h1><?= $modification ? 'Modifier un cours' : 'Créer un cours' ?></h1>
 
 <?php if (!empty($erreurs)): ?>
     <div class="message message-erreur">
@@ -189,7 +189,7 @@ require_once __DIR__ . '/../../header-admin.php';
         <input type="date" id="date_cours" name="date_cours" value="<?= proteger($cours['date_cours']) ?>" required>
     </p>
     <p>
-        <label for="heure_debut">Heure de debut</label>
+        <label for="heure_debut">Heure de début</label>
         <input type="time" id="heure_debut" name="heure_debut" value="<?= proteger($cours['heure_debut']) ?>" required>
     </p>
     <p>
@@ -201,11 +201,11 @@ require_once __DIR__ . '/../../header-admin.php';
         <input type="number" id="capacite_max" name="capacite_max" min="1" max="50" value="<?= proteger($cours['capacite_max']) ?>" required>
     </p>
     <p>
-        <label for="age_min_mois">Age minimum du chien, en mois</label>
+        <label for="age_min_mois">Âge minimum du chien, en mois</label>
         <input type="number" id="age_min_mois" name="age_min_mois" min="0" value="<?= proteger($cours['age_min_mois']) ?>" required>
     </p>
     <p>
-        <label for="age_max_mois">Age maximum du chien, en mois</label>
+        <label for="age_max_mois">Âge maximum du chien, en mois</label>
         <input type="number" id="age_max_mois" name="age_max_mois" min="0" value="<?= proteger($cours['age_max_mois'] ?? '') ?>">
         <small class="aide">Laisser vide s'il n'y a pas de limite haute.</small>
     </p>

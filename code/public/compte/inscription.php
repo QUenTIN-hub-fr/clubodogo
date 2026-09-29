@@ -16,13 +16,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $erreurs[] = 'Le nom est obligatoire.';
     }
     if ($prenom === '') {
-        $erreurs[] = 'Le prenom est obligatoire.';
+        $erreurs[] = 'Le prénom est obligatoire.';
     }
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $erreurs[] = "L'adresse email n'est pas valide.";
     }
     if (strlen($motDePasse) < 8) {
-        $erreurs[] = 'Le mot de passe doit contenir au moins 8 caracteres.';
+        $erreurs[] = 'Le mot de passe doit contenir au moins 8 caractères.';
     }
     if (!preg_match('/[A-Z]/', $motDePasse)) {
         $erreurs[] = 'Le mot de passe doit contenir au moins une majuscule.';
@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $requete->execute([$email]);
 
         if ($requete->fetch()) {
-            $erreurs[] = 'Un compte existe deja avec cette adresse email.';
+            $erreurs[] = 'Un compte existe déjà avec cette adresse email.';
         } else {
             $motDePasseHache = password_hash($motDePasse, PASSWORD_DEFAULT);
 
@@ -54,15 +54,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-$titrePage = 'Creer un compte';
+$titrePage = 'Créer un compte';
 require_once __DIR__ . '/../../header.php';
 ?>
 
-<h1>Creer un compte</h1>
+<h1>Créer un compte</h1>
 
 <?php if ($succes): ?>
     <div class="formulaire">
-        <div class="message message-succes">Votre compte a bien ete cree. Vous pouvez maintenant vous connecter.</div>
+        <div class="message message-succes">Votre compte a bien été créé. Vous pouvez maintenant vous connecter.</div>
         <a href="connexion.php" class="bouton">Se connecter</a>
     </div>
 <?php else: ?>
@@ -84,7 +84,7 @@ require_once __DIR__ . '/../../header.php';
             <input type="text" id="nom" name="nom" value="<?= proteger($nom ?? '') ?>" required>
         </p>
         <p>
-            <label for="prenom">Prenom</label>
+            <label for="prenom">Prénom</label>
             <input type="text" id="prenom" name="prenom" value="<?= proteger($prenom ?? '') ?>" required>
         </p>
         <p>
@@ -97,7 +97,7 @@ require_once __DIR__ . '/../../header.php';
                 <input type="password" id="mot_de_passe" name="mot_de_passe" required>
                 <button type="button" class="afficher-mdp" data-cible="mot_de_passe">Afficher</button>
             </span>
-            <small class="aide">8 caracteres minimum, dont une majuscule et un chiffre.</small>
+            <small class="aide">8 caractères minimum, dont une majuscule et un chiffre.</small>
         </p>
         <p>
             <label for="confirmation">Confirmer le mot de passe</label>
@@ -107,8 +107,8 @@ require_once __DIR__ . '/../../header.php';
             </span>
         </p>
         <div class="actions">
-            <button type="submit" class="bouton">Creer mon compte</button>
-            <a href="connexion.php">J'ai deja un compte</a>
+            <button type="submit" class="bouton">Créer mon compte</button>
+            <a href="connexion.php">J'ai déjà un compte</a>
         </div>
     </form>
 

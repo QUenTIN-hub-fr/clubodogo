@@ -25,14 +25,14 @@ require_once __DIR__ . '/../../header.php';
 </div>
 
 <?php if (empty($chiens)): ?>
-    <p class="vide">Vous n'avez pas encore enregistre de chien. Ajoutez-en un pour pouvoir l'inscrire a un cours.</p>
+    <p class="vide">Vous n'avez pas encore enregistré de chien. Ajoutez-en un pour pouvoir l'inscrire à un cours.</p>
 <?php else: ?>
     <div class="grille">
         <?php foreach ($chiens as $chien): ?>
             <div class="carte">
                 <h3><?= proteger($chien['nom_chien']) ?></h3>
                 <p><?= proteger($chien['libelle_race']) ?> - <?= proteger($chien['sexe']) ?></p>
-                <p>Ne le <?= date('d/m/Y', strtotime($chien['date_naissance'])) ?></p>
+                <p>Né le <?= date('d/m/Y', strtotime($chien['date_naissance'])) ?></p>
                 <p>Puce : <?= proteger($chien['num_puce']) ?></p>
                 <div class="actions">
                     <a href="/chiens/formulaire.php?id=<?= (int) $chien['id'] ?>" class="bouton bouton-petit">Modifier</a>

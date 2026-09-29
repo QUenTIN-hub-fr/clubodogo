@@ -43,10 +43,10 @@
                     <a href="/admin/index.php">Administration</a>
                 <?php endif; ?>
 
-                <a href="/compte/profil.php" class="lien-compte"><?= proteger($connecte['prenom']) ?></a>
-                <a href="/compte/deconnexion.php">Deconnexion</a>
+                <span class="lien-compte"><?= proteger($connecte['prenom']) ?></span>
+                <a href="/compte/deconnexion.php">Déconnexion</a>
             <?php else: ?>
-                <a href="/compte/inscription.php">Creer un compte</a>
+                <a href="/compte/inscription.php">Créer un compte</a>
                 <a href="/compte/connexion.php" class="bouton bouton-orange">Connexion</a>
             <?php endif; ?>
         </nav>

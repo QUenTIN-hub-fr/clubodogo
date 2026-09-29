@@ -44,13 +44,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($chien['date_naissance'] === '' || strtotime($chien['date_naissance']) === false) {
         $erreurs[] = 'La date de naissance est obligatoire.';
     } elseif (strtotime($chien['date_naissance']) > time()) {
-        $erreurs[] = 'La date de naissance ne peut pas etre dans le futur.';
+        $erreurs[] = 'La date de naissance ne peut pas être dans le futur.';
     }
     if (!in_array($chien['sexe'], ['male', 'femelle'])) {
-        $erreurs[] = 'Le sexe doit etre male ou femelle.';
+        $erreurs[] = 'Le sexe doit être mâle ou femelle.';
     }
     if ($chien['num_puce'] === '') {
-        $erreurs[] = 'Le numero de puce est obligatoire.';
+        $erreurs[] = 'Le numéro de puce est obligatoire.';
     }
     if ($chien['id_race'] <= 0) {
         $erreurs[] = 'La race est obligatoire.';
@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $verif->execute([$chien['num_puce'], $id]);
 
         if ($verif->fetch()) {
-            $erreurs[] = 'Un chien est deja enregistre avec ce numero de puce.';
+            $erreurs[] = 'Un chien est déjà enregistré avec ce numéro de puce.';
         } else {
             if ($modification) {
                 $requete = $pdo->prepare(
@@ -125,7 +125,7 @@ require_once __DIR__ . '/../../header.php';
     <p>
         <label for="sexe">Sexe</label>
         <select id="sexe" name="sexe" required>
-            <option value="male" <?= $chien['sexe'] === 'male' ? 'selected' : '' ?>>Male</option>
+            <option value="male" <?= $chien['sexe'] === 'male' ? 'selected' : '' ?>>Mâle</option>
             <option value="femelle" <?= $chien['sexe'] === 'femelle' ? 'selected' : '' ?>>Femelle</option>
         </select>
     </p>
@@ -134,7 +134,7 @@ require_once __DIR__ . '/../../header.php';
         <input type="date" id="date_naissance" name="date_naissance" value="<?= proteger($chien['date_naissance']) ?>" required>
     </p>
     <p>
-        <label for="num_puce">Numero de puce</label>
+        <label for="num_puce">Numéro de puce</label>
         <input type="text" id="num_puce" name="num_puce" value="<?= proteger($chien['num_puce']) ?>" required>
     </p>
     <div class="actions">

@@ -9,7 +9,7 @@ $erreur = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $idInscription = (int) ($_POST['id_inscription'] ?? 0);
 
-    // L'inscription doit concerner un chien du proprietaire et un cours a venir
+    // L'inscription doit concerner un chien du propriétaire et un cours à venir
     $verif = $pdo->prepare(
         "SELECT inscription.id
          FROM inscription
@@ -25,9 +25,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($verif->fetch()) {
         $maj = $pdo->prepare("UPDATE inscription SET statut = 'annule' WHERE id = ?");
         $maj->execute([$idInscription]);
-        $succes = 'L\'inscription a bien ete annulee.';
+        $succes = 'L\'inscription a bien été annulée.';
     } else {
-        $erreur = 'Cette inscription ne peut pas etre annulee.';
+        $erreur = 'Cette inscription ne peut pas être annulée.';
     }
 }
 
@@ -45,8 +45,8 @@ $inscriptions = $requete->fetchAll();
 
 $libellesStatut = [
     'en_attente' => 'En attente',
-    'confirme' => 'Confirme',
-    'annule' => 'Annule'
+    'confirme' => 'Confirmé',
+    'annule' => 'Annulé'
 ];
 
 $titrePage = 'Mes inscriptions';
@@ -83,7 +83,7 @@ require_once __DIR__ . '/../../header.php';
                         <a href="/cours/detail.php?id=<?= (int) $i['id_cours'] ?>"><?= proteger($i['titre']) ?></a>
                     </td>
                     <td data-label="Chien"><?= proteger($i['nom_chien']) ?></td>
-                    <td data-label="Date"><?= date('d/m/Y', strtotime($i['date_cours'])) ?> a <?= substr($i['heure_debut'], 0, 5) ?></td>
+                    <td data-label="Date"><?= date('d/m/Y', strtotime($i['date_cours'])) ?> à <?= substr($i['heure_debut'], 0, 5) ?></td>
                     <td data-label="Statut">
                         <span class="statut statut-<?= proteger($i['statut']) ?>"><?= $libellesStatut[$i['statut']] ?></span>
                     </td>

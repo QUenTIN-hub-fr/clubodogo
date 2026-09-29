@@ -31,7 +31,7 @@
             <a href="/admin/races.php">Races</a>
             <a href="/admin/membres.php">Membres</a>
             <a href="/index.php">Voir le site</a>
-            <a href="/compte/deconnexion.php">Deconnexion</a>
+            <a href="/compte/deconnexion.php">Déconnexion</a>
         </nav>
     </div>
 </header>

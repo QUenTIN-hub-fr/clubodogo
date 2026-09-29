@@ -19,7 +19,7 @@ require_once __DIR__ . '/../header.php';
 
 <section class="hero">
     <h1>Un club canin pour progresser avec votre chien</h1>
-    <p>Sociabilisation, dressage et parcours sportifs encadres par des coachs diplomes. Inscrivez votre chien en quelques clics.</p>
+    <p>Sociabilisation, dressage et parcours sportifs encadrés par des coachs diplômés. Inscrivez votre chien en quelques clics.</p>
 
     <?php if (estConnecte()): ?>
         <p class="salutation">Bonjour <?= proteger(utilisateurConnecte()['prenom']) ?>, ravi de vous revoir.</p>
@@ -28,7 +28,7 @@ require_once __DIR__ . '/../header.php';
     <div class="actions">
         <a href="/cours/liste.php" class="bouton">Voir les cours</a>
         <?php if (!estConnecte()): ?>
-            <a href="/compte/inscription.php" class="bouton bouton-orange">Creer un compte</a>
+            <a href="/compte/inscription.php" class="bouton bouton-orange">Créer un compte</a>
         <?php elseif (aLeRole('proprietaire')): ?>
             <a href="/chiens/liste.php" class="bouton bouton-orange">Mes chiens</a>
         <?php endif; ?>
@@ -38,7 +38,7 @@ require_once __DIR__ . '/../header.php';
 <h2 class="section-titre">Nos prochains cours</h2>
 
 <?php if (empty($prochainsCours)): ?>
-    <p class="vide">Aucun cours n'est programme pour le moment.</p>
+    <p class="vide">Aucun cours n'est programmé pour le moment.</p>
 <?php else: ?>
     <div class="grille">
         <?php foreach ($prochainsCours as $c): ?>
@@ -46,7 +46,7 @@ require_once __DIR__ . '/../header.php';
             <div class="carte">
                 <span class="badge"><?= proteger($c['libelle_type']) ?></span>
                 <h3><?= proteger($c['titre']) ?></h3>
-                <p><?= date('d/m/Y', strtotime($c['date_cours'])) ?>, de <?= substr($c['heure_debut'], 0, 5) ?> a <?= substr($c['heure_fin'], 0, 5) ?></p>
+                <p><?= date('d/m/Y', strtotime($c['date_cours'])) ?>, de <?= substr($c['heure_debut'], 0, 5) ?> à <?= substr($c['heure_fin'], 0, 5) ?></p>
                 <p>
                     <?php if ($placesRestantes > 0): ?>
                         <?= $placesRestantes ?> place(s) restante(s) sur <?= (int) $c['capacite_max'] ?>

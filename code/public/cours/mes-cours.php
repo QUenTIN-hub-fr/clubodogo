@@ -34,7 +34,7 @@ require_once __DIR__ . '/../../header.php';
 <p>Les séances que j'anime et la liste des chiens inscrits.</p>
 
 <?php if (empty($mesCours)): ?>
-    <p class="vide">Aucun cours a venir ne vous est attribue.</p>
+    <p class="vide">Aucun cours à venir ne vous est attribué.</p>
 <?php endif; ?>
 
 <?php foreach ($mesCours as $c): ?>
@@ -45,7 +45,7 @@ require_once __DIR__ . '/../../header.php';
     <div class="carte" style="margin-top: 1.5rem;">
         <span class="badge"><?= proteger($c['libelle_type']) ?></span>
         <h2><?= proteger($c['titre']) ?></h2>
-        <p><?= date('d/m/Y', strtotime($c['date_cours'])) ?>, de <?= substr($c['heure_debut'], 0, 5) ?> a <?= substr($c['heure_fin'], 0, 5) ?></p>
+        <p><?= date('d/m/Y', strtotime($c['date_cours'])) ?>, de <?= substr($c['heure_debut'], 0, 5) ?> à <?= substr($c['heure_fin'], 0, 5) ?></p>
         <p><strong><?= count($participants) ?> chien(s) inscrit(s) sur <?= (int) $c['capacite_max'] ?> places</strong></p>
 
         <?php if (empty($participants)): ?>
@@ -56,8 +56,8 @@ require_once __DIR__ . '/../../header.php';
                     <tr>
                         <th>Chien</th>
                         <th>Race</th>
-                        <th>Age le jour du cours</th>
-                        <th>Proprietaire</th>
+                        <th>Âge le jour du cours</th>
+                        <th>Propriétaire</th>
                     </tr>
                 </thead>
                 <tbody>

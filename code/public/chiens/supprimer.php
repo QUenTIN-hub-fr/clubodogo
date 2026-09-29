@@ -39,16 +39,16 @@ require_once __DIR__ . '/../../header.php';
 
     <?php if ($nombreInscriptions > 0): ?>
         <div class="message message-erreur">
-            Ce chien est inscrit a <?= $nombreInscriptions ?> cours.
-            Ces inscriptions seront egalement supprimees.
+            Ce chien est inscrit à <?= $nombreInscriptions ?> cours.
+            Ces inscriptions seront également supprimées.
         </div>
     <?php endif; ?>
 
-    <p>Cette action est definitive.</p>
+    <p>Cette action est définitive.</p>
 
     <form method="post">
         <div class="actions">
-            <button type="submit" class="bouton bouton-rouge">Supprimer definitivement</button>
+            <button type="submit" class="bouton bouton-rouge">Supprimer définitivement</button>
             <a href="/chiens/liste.php">Annuler</a>
         </div>
     </form>
