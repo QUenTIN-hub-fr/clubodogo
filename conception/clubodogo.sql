@@ -165,11 +165,11 @@ CREATE TABLE `utilisateur` (
 --
 
 INSERT INTO `utilisateur` (`id`, `nom`, `prenom`, `email`, `password`, `role`) VALUES
-(1, 'Martin', 'Sophie', 'responsable@clubodogo.fr', '$2y$12$Qw8WvJ1H6nT9Xk3rLzYuEeVqK5sM2pN7bC4dF6gH8jI0kL1mN2oPa', 'responsable'),
-(2, 'Durand', 'Lucas', 'coach.lucas@clubodogo.fr', '$2y$12$Qw8WvJ1H6nT9Xk3rLzYuEeVqK5sM2pN7bC4dF6gH8jI0kL1mN2oPa', 'coach'),
-(3, 'Petit', 'Emma', 'coach.emma@clubodogo.fr', '$2y$12$Qw8WvJ1H6nT9Xk3rLzYuEeVqK5sM2pN7bC4dF6gH8jI0kL1mN2oPa', 'coach'),
-(4, 'Bernard', 'Thomas', 'thomas.bernard@email.fr', '$2y$12$Qw8WvJ1H6nT9Xk3rLzYuEeVqK5sM2pN7bC4dF6gH8jI0kL1mN2oPa', 'proprietaire'),
-(5, 'Leroy', 'Julie', 'julie.leroy@email.fr', '$2y$12$Qw8WvJ1H6nT9Xk3rLzYuEeVqK5sM2pN7bC4dF6gH8jI0kL1mN2oPa', 'proprietaire');
+(1, 'Martin', 'Sophie', 'responsable@clubodogo.fr', '$2y$10$oN8Ul7lR/a7xjKF0p/Y5rutbsXZTdy8aekvKBKdNq64PpkCMV6FP6', 'responsable'),
+(2, 'Durand', 'Lucas', 'coach.lucas@clubodogo.fr', '$2y$10$XGShrf01rHmPBm7V7K3lxODP5HuXH6iKrm9SGjDwzlydRUDTwAg8O', 'coach'),
+(3, 'Petit', 'Emma', 'coach.emma@clubodogo.fr', '$2y$10$f0J6qxdpG5IaTOpv.gGznOZjXwBvagjXUvN73OQ7QXhAwvR/tQMyi', 'coach'),
+(4, 'Bernard', 'Thomas', 'thomas.bernard@email.fr', '$2y$10$54zFVQlQdvWFPz2ftTFFgeT6x5.GbPRo7H.VY8z5P826ySfCDWWXO', 'proprietaire'),
+(5, 'Leroy', 'Julie', 'julie.leroy@email.fr', '$2y$10$PQRtas1T3a76w8PfF6iOe.CeI06w8CzwQ9hmjub54CJld3HEa38y6', 'proprietaire');
 
 --
 -- Index pour les tables déchargées
