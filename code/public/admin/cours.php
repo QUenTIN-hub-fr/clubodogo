@@ -6,6 +6,9 @@ $succes = '';
 $erreur = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    verifierJetonCsrf();
+
     $idCours = (int) ($_POST['id_cours'] ?? 0);
 
     $verif = $pdo->prepare("SELECT COUNT(*) AS total FROM inscription WHERE id_cours = ? AND statut != 'annule'");
@@ -14,8 +17,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ((int) $verif->fetch()['total'] > 0) {
         $erreur = "Ce cours ne peut pas être supprimé : des chiens y sont inscrits.";
     } else {
+        // Les deux suppressions forment un tout : soit les deux aboutissent, soit aucune
+        $pdo->beginTransaction();
+
         $pdo->prepare('DELETE FROM inscription WHERE id_cours = ?')->execute([$idCours]);
         $pdo->prepare('DELETE FROM cours WHERE id = ?')->execute([$idCours]);
+
+        $pdo->commit();
+
         $succes = 'Le cours a bien été supprimé.';
     }
 }
@@ -75,6 +84,9 @@ require_once __DIR__ . '/../../header-admin.php';
                         <div class="actions">
                             <a href="/admin/cours-formulaire.php?id=<?= (int) $c['id'] ?>" class="bouton bouton-petit">Modifier</a>
                             <form method="post" data-confirmation="Voulez-vous vraiment supprimer ce cours ?">
+
+                                <?= champJetonCsrf() ?>
+
                                 <input type="hidden" name="id_cours" value="<?= (int) $c['id'] ?>">
                                 <button type="submit" class="bouton bouton-petit bouton-rouge">Supprimer</button>
                             </form>

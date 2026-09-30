@@ -19,10 +19,18 @@ $inscriptions->execute([$id]);
 $nombreInscriptions = (int) $inscriptions->fetch()['total'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    verifierJetonCsrf();
+
+    // Les deux suppressions forment un tout : soit les deux aboutissent, soit aucune
+    $pdo->beginTransaction();
+
     $pdo->prepare('DELETE FROM inscription WHERE id_chien = ?')->execute([$id]);
 
     $suppression = $pdo->prepare('DELETE FROM chien WHERE id = ? AND id_utilisateur = ?');
     $suppression->execute([$id, $utilisateur['id']]);
+
+    $pdo->commit();
 
     header('Location: /chiens/liste.php');
     exit;
@@ -47,6 +55,9 @@ require_once __DIR__ . '/../../header.php';
     <p>Cette action est définitive.</p>
 
     <form method="post">
+
+        <?= champJetonCsrf() ?>
+
         <div class="actions">
             <button type="submit" class="bouton bouton-rouge">Supprimer définitivement</button>
             <a href="/chiens/liste.php">Annuler</a>

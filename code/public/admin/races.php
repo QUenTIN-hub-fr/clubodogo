@@ -9,6 +9,9 @@ $idModification = (int) ($_GET['id'] ?? 0);
 $libelleModification = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    verifierJetonCsrf();
+
     $action = $_POST['action'] ?? '';
 
     if ($action === 'supprimer') {
@@ -97,6 +100,9 @@ require_once __DIR__ . '/../../header-admin.php';
 <?php endif; ?>
 
 <form method="post" class="formulaire">
+
+    <?= champJetonCsrf() ?>
+
     <input type="hidden" name="id_race" value="<?= (int) $idModification ?>">
     <p>
         <label for="libelle_race"><?= $idModification > 0 ? 'Modifier la race' : 'Nouvelle race' ?></label>
@@ -130,6 +136,9 @@ require_once __DIR__ . '/../../header-admin.php';
                         <div class="actions">
                             <a href="/admin/races.php?id=<?= (int) $race['id'] ?>" class="bouton bouton-petit">Modifier</a>
                             <form method="post" data-confirmation="Voulez-vous vraiment supprimer cette race ?">
+
+                                <?= champJetonCsrf() ?>
+
                                 <input type="hidden" name="action" value="supprimer">
                                 <input type="hidden" name="id_race" value="<?= (int) $race['id'] ?>">
                                 <button type="submit" class="bouton bouton-petit bouton-rouge">Supprimer</button>

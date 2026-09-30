@@ -1,9 +1,16 @@
 <?php
 require_once __DIR__ . '/../../init.php';
 
+if (estConnecte()) {
+    header('Location: /index.php');
+    exit;
+}
+
 $erreur = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    verifierJetonCsrf();
 
     $email = trim($_POST['email'] ?? '');
     $motDePasse = $_POST['mot_de_passe'] ?? '';
@@ -39,6 +46,8 @@ require_once __DIR__ . '/../../header.php';
 <h1>Se connecter</h1>
 
 <form method="post" action="connexion.php" class="formulaire">
+
+    <?= champJetonCsrf() ?>
 
     <?php if ($erreur !== ''): ?>
         <div class="message message-erreur"><?= proteger($erreur) ?></div>

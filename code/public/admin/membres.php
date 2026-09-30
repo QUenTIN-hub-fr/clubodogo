@@ -8,6 +8,9 @@ $erreurs = [];
 $rolesAutorises = ['responsable', 'coach', 'proprietaire'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    verifierJetonCsrf();
+
     $idMembre = (int) ($_POST['id_membre'] ?? 0);
     $nouveauRole = $_POST['role'] ?? '';
 
@@ -79,6 +82,9 @@ require_once __DIR__ . '/../../header-admin.php';
                             <span class="role-actuel"><?= proteger($membre['role']) ?> (vous)</span>
                         <?php else: ?>
                             <form method="post" class="formulaire-ligne">
+
+                                <?= champJetonCsrf() ?>
+
                                 <input type="hidden" name="id_membre" value="<?= (int) $membre['id'] ?>">
                                 <select name="role">
                                     <?php foreach ($rolesAutorises as $role): ?>

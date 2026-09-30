@@ -36,7 +36,7 @@ function exigerRole($role)
     exigerConnexion();
     if (!aLeRole($role)) {
         http_response_code(403);
-        exit('Acces refuse.');
+        exit('Accès refusé.');
     }
 }
 
@@ -51,7 +51,32 @@ function ageEnMois($dateNaissance, $dateReference)
 function trancheAge($min, $max)
 {
     if ($max === null) {
-        return 'a partir de ' . $min . ' mois';
+        return 'à partir de ' . $min . ' mois';
     }
-    return 'de ' . $min . ' a ' . $max . ' mois';
+    return 'de ' . $min . ' à ' . $max . ' mois';
+}
+
+// Le jeton est genere une seule fois par session et reste valable tant qu'elle dure
+function jetonCsrf()
+{
+    if (!isset($_SESSION['jeton_csrf'])) {
+        $_SESSION['jeton_csrf'] = bin2hex(random_bytes(32));
+    }
+    return $_SESSION['jeton_csrf'];
+}
+
+function champJetonCsrf()
+{
+    return '<input type="hidden" name="jeton_csrf" value="' . jetonCsrf() . '">';
+}
+
+// Toute requete POST sans jeton valide est rejetee avant le moindre traitement
+function verifierJetonCsrf()
+{
+    $recu = $_POST['jeton_csrf'] ?? '';
+
+    if (!isset($_SESSION['jeton_csrf']) || !hash_equals($_SESSION['jeton_csrf'], $recu)) {
+        http_response_code(403);
+        exit('Requête refusée : jeton de sécurité invalide.');
+    }
 }

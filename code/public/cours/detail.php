@@ -36,6 +36,7 @@ if (aLeRole('proprietaire')) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exigerRole('proprietaire');
+    verifierJetonCsrf();
     $utilisateur = utilisateurConnecte();
     $idChien = (int) ($_POST['id_chien'] ?? 0);
     $existante = false;
@@ -139,6 +140,9 @@ require_once __DIR__ . '/../../header.php';
             <p><a href="/chiens/formulaire.php" class="bouton">Ajouter un chien</a></p>
         <?php else: ?>
             <form method="post">
+
+                <?= champJetonCsrf() ?>
+
                 <label for="id_chien">Choisir le chien</label>
                 <select id="id_chien" name="id_chien" required>
                     <?php foreach ($chiens as $c): ?>

@@ -32,6 +32,8 @@ $races = $pdo->query('SELECT id, libelle_race FROM race ORDER BY libelle_race')-
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+    verifierJetonCsrf();
+
     $chien['nom_chien'] = trim($_POST['nom_chien'] ?? '');
     $chien['date_naissance'] = $_POST['date_naissance'] ?? '';
     $chien['sexe'] = $_POST['sexe'] ?? '';
@@ -107,6 +109,9 @@ require_once __DIR__ . '/../../header.php';
 <?php endif; ?>
 
 <form method="post" class="formulaire">
+
+    <?= champJetonCsrf() ?>
+
     <p>
         <label for="nom_chien">Nom du chien</label>
         <input type="text" id="nom_chien" name="nom_chien" value="<?= proteger($chien['nom_chien']) ?>" required>

@@ -1,10 +1,17 @@
 <?php
 require_once __DIR__ . '/../../init.php';
 
+if (estConnecte()) {
+    header('Location: /index.php');
+    exit;
+}
+
 $erreurs = [];
 $succes = false;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    verifierJetonCsrf();
 
     $nom = trim($_POST['nom'] ?? '');
     $prenom = trim($_POST['prenom'] ?? '');
@@ -21,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $erreurs[] = "L'adresse email n'est pas valide.";
     }
-    if (strlen($motDePasse) < 8) {
+    if (mb_strlen($motDePasse) < 8) {
         $erreurs[] = 'Le mot de passe doit contenir au moins 8 caractères.';
     }
     if (!preg_match('/[A-Z]/', $motDePasse)) {
@@ -68,6 +75,8 @@ require_once __DIR__ . '/../../header.php';
 <?php else: ?>
 
     <form method="post" action="inscription.php" class="formulaire">
+
+        <?= champJetonCsrf() ?>
 
         <?php if (!empty($erreurs)): ?>
             <div class="message message-erreur">

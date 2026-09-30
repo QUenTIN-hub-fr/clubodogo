@@ -44,6 +44,9 @@ if ($modification && $_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    verifierJetonCsrf();
+
     $cours['titre'] = trim($_POST['titre'] ?? '');
     $cours['description'] = trim($_POST['description'] ?? '');
     $cours['capacite_max'] = (int) ($_POST['capacite_max'] ?? 0);
@@ -154,6 +157,9 @@ require_once __DIR__ . '/../../header-admin.php';
 <?php endif; ?>
 
 <form method="post" class="formulaire">
+
+    <?= champJetonCsrf() ?>
+
     <p>
         <label for="titre">Titre du cours</label>
         <input type="text" id="titre" name="titre" value="<?= proteger($cours['titre']) ?>" required>

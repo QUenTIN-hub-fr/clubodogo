@@ -7,6 +7,9 @@ $succes = '';
 $erreur = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    verifierJetonCsrf();
+
     $idInscription = (int) ($_POST['id_inscription'] ?? 0);
 
     // L'inscription doit concerner un chien du propriétaire et un cours à venir
@@ -90,6 +93,9 @@ require_once __DIR__ . '/../../header.php';
                     <td data-label="Action">
                         <?php if ($i['statut'] !== 'annule' && $i['date_cours'] >= date('Y-m-d')): ?>
                             <form method="post" data-confirmation="Voulez-vous vraiment annuler cette inscription ?">
+
+                                <?= champJetonCsrf() ?>
+
                                 <input type="hidden" name="id_inscription" value="<?= (int) $i['id'] ?>">
                                 <button type="submit" class="bouton bouton-petit bouton-rouge">Annuler</button>
                             </form>
