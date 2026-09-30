@@ -11,6 +11,6 @@ try {
     ]);
 
 } catch (PDOException $e) {
-    // On n'affiche jamais le detail de l'erreur a l'utilisateur
-    die('Connexion a la base de donnees impossible.');
+    // On n'affiche jamais le détail de l'erreur à l'utilisateur
+    die('Connexion à la base de données impossible.');
 }

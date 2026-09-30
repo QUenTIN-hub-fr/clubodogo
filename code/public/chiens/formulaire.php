@@ -56,6 +56,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     if ($chien['id_race'] <= 0) {
         $erreurs[] = 'La race est obligatoire.';
+    } else {
+        // La race est vérifiée en base : le menu déroulant ne protège rien
+        $verifRace = $pdo->prepare('SELECT id FROM race WHERE id = ?');
+        $verifRace->execute([$chien['id_race']]);
+
+        if (!$verifRace->fetch()) {
+            $erreurs[] = 'La race sélectionnée est introuvable.';
+        }
     }
 
     if (empty($erreurs)) {

@@ -56,7 +56,7 @@ function trancheAge($min, $max)
     return 'de ' . $min . ' à ' . $max . ' mois';
 }
 
-// Le jeton est genere une seule fois par session et reste valable tant qu'elle dure
+// Le jeton est généré une seule fois par session et reste valable tant qu'elle dure
 function jetonCsrf()
 {
     if (!isset($_SESSION['jeton_csrf'])) {
@@ -70,7 +70,7 @@ function champJetonCsrf()
     return '<input type="hidden" name="jeton_csrf" value="' . jetonCsrf() . '">';
 }
 
-// Toute requete POST sans jeton valide est rejetee avant le moindre traitement
+// Toute requête POST sans jeton valide est rejetée avant le moindre traitement
 function verifierJetonCsrf()
 {
     $recu = $_POST['jeton_csrf'] ?? '';

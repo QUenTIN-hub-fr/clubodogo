@@ -18,14 +18,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $erreur = "Ce cours ne peut pas être supprimé : des chiens y sont inscrits.";
     } else {
         // Les deux suppressions forment un tout : soit les deux aboutissent, soit aucune
-        $pdo->beginTransaction();
+        try {
+            $pdo->beginTransaction();
 
-        $pdo->prepare('DELETE FROM inscription WHERE id_cours = ?')->execute([$idCours]);
-        $pdo->prepare('DELETE FROM cours WHERE id = ?')->execute([$idCours]);
+            $pdo->prepare('DELETE FROM inscription WHERE id_cours = ?')->execute([$idCours]);
+            $pdo->prepare('DELETE FROM cours WHERE id = ?')->execute([$idCours]);
 
-        $pdo->commit();
+            $pdo->commit();
 
-        $succes = 'Le cours a bien été supprimé.';
+            $succes = 'Le cours a bien été supprimé.';
+
+        } catch (PDOException $e) {
+            $pdo->rollBack();
+            $erreur = "La suppression a échoué, aucune donnée n'a été modifiée.";
+        }
     }
 }
 

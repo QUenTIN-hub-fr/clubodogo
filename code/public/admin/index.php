@@ -15,7 +15,8 @@ $prochainsCours = $pdo->query(
     "SELECT cours.id, cours.titre, cours.date_cours, cours.heure_debut, cours.capacite_max,
             type_cours.libelle_type,
             utilisateur.prenom, utilisateur.nom,
-            (SELECT COUNT(*) FROM inscription WHERE inscription.id_cours = cours.id) AS nb_inscrits
+            (SELECT COUNT(*) FROM inscription
+             WHERE inscription.id_cours = cours.id AND inscription.statut != 'annule') AS nb_inscrits
      FROM cours
      JOIN type_cours ON type_cours.id = cours.id_type_cours
      JOIN utilisateur ON utilisateur.id = cours.id_utilisateur

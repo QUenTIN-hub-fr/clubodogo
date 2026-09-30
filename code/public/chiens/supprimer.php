@@ -23,14 +23,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     verifierJetonCsrf();
 
     // Les deux suppressions forment un tout : soit les deux aboutissent, soit aucune
-    $pdo->beginTransaction();
+    try {
+        $pdo->beginTransaction();
 
-    $pdo->prepare('DELETE FROM inscription WHERE id_chien = ?')->execute([$id]);
+        $pdo->prepare('DELETE FROM inscription WHERE id_chien = ?')->execute([$id]);
 
-    $suppression = $pdo->prepare('DELETE FROM chien WHERE id = ? AND id_utilisateur = ?');
-    $suppression->execute([$id, $utilisateur['id']]);
+        $suppression = $pdo->prepare('DELETE FROM chien WHERE id = ? AND id_utilisateur = ?');
+        $suppression->execute([$id, $utilisateur['id']]);
 
-    $pdo->commit();
+        $pdo->commit();
+
+    } catch (PDOException $e) {
+        $pdo->rollBack();
+        exit("La suppression a échoué, aucune donnée n'a été modifiée.");
+    }
 
     header('Location: /chiens/liste.php');
     exit;
